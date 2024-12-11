@@ -3,7 +3,7 @@ import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 
-const baseUrl =  import.meta.env.MODE === "development" ? "http://localhost:8000/" : "/";
+const baseUrl =  import.meta.env.MODE === "development" ? "http://localhost:8000" : "/";
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -16,7 +16,7 @@ export const useAuthStore = create((set, get) => ({
 
   CheckAuth: async () => {
     try {
-      const res = await axiosInstance.get("auth/check");
+      const res = await axiosInstance.get("/auth/check");
       set({ authUser: res.data });
       get().connectSocket();
     } catch (error) {
@@ -30,7 +30,7 @@ export const useAuthStore = create((set, get) => ({
   signup: async (data) => {
     set({ isSigningUp: true });
     try {
-      const res = await axiosInstance.post("auth/signup", data);
+      const res = await axiosInstance.post("/auth/signup", data);
       toast.success("Account Created Successfully");
       set({ authUser: res.data });
       get().connectSocket();
@@ -44,7 +44,7 @@ export const useAuthStore = create((set, get) => ({
   login: async (data) => {
     set({ isLoggingIn: true });
     try {
-      const res = await axiosInstance.post("auth/login", data);
+      const res = await axiosInstance.post("/auth/login", data);
       toast.success("Login Successfully");
       set({ authUser: res.data });
 
@@ -59,7 +59,7 @@ export const useAuthStore = create((set, get) => ({
 
   logout: async () => {
     try {
-      await axiosInstance.post("auth/logout");
+      await axiosInstance.post("/auth/logout");
       toast.success("Logout Successfully");
       set({ authUser: null });
       get().disconnectSocket();
@@ -71,7 +71,7 @@ export const useAuthStore = create((set, get) => ({
   updateProfile: async (data) => {
     set({ isUpdatingProfile: true });
     try {
-      const res = await axiosInstance.put("auth/update-profile", data);
+      const res = await axiosInstance.put("/auth/update-profile", data);
       set({ authUser: res.data });
       toast.success("Profile updated successfully");
     } catch (error) {
