@@ -6,12 +6,12 @@ import { ConnectDb } from "./lib/db.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { app, server } from "./lib/socket.js";
-import path, { dirname } from "path";
+import path from "path";
 
 dotenv.config();
 const Port = process.env.PORT;
 
-const path = path.resolve();
+const __dirname = path.resolve();
 
 app.use(
   cors({
